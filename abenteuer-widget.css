@@ -1,0 +1,593 @@
+/* ============================================================
+   ABENTEUER-WIDGET — Stylesheet
+   Alles unter dem Namespace .ab-widget eingegrenzt,
+   damit es nicht mit dem Host-Stylesheet kollidiert.
+   ============================================================ */
+
+/* Fonts werden aus dem JS dynamisch geladen, aber falls schon vorhanden: */
+.ab-widget,
+.ab-widget * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Trigger-Button (optional auf der Host-Seite) ===== */
+.ab-widget-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Patrick Hand', system-ui, sans-serif;
+  font-size: 20px;
+  background: #ffd166;
+  color: #2c3e50;
+  padding: 14px 28px;
+  border: 3px solid #2c3e50;
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 #2c3e50;
+  cursor: pointer;
+  transition: transform 0.1s;
+  text-decoration: none;
+}
+.ab-widget-trigger:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #2c3e50; }
+.ab-widget-trigger:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #2c3e50; }
+
+/* ===== Fullscreen-Overlay ===== */
+.ab-widget {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #b8e3f5;
+  font-family: 'Patrick Hand', system-ui, sans-serif;
+  color: #2c3e50;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: none;
+}
+.ab-widget.ab-open {
+  display: flex;
+  flex-direction: column;
+  animation: ab-fadeIn 0.3s ease;
+}
+@keyframes ab-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Body-Lock, wenn Widget offen */
+body.ab-widget-open { overflow: hidden; }
+
+/* ===== Close-Button (oben rechts, immer sichtbar) ===== */
+.ab-close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: #e63946;
+  color: white;
+  border: 3px solid #2c3e50;
+  border-radius: 50%;
+  font-size: 28px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 3px 3px 0 #2c3e50;
+  transition: transform 0.15s;
+  z-index: 1000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+  line-height: 1;
+  padding: 0;
+}
+.ab-close-btn:hover { transform: scale(1.1); }
+.ab-close-btn:active { transform: scale(0.95); }
+
+/* ===== Header ===== */
+.ab-widget header {
+  order: 1;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 14px 20px 10px;
+  background: linear-gradient(180deg, #b8e3f5 0%, #d6eef7 100%);
+  position: relative;
+}
+.ab-widget h1 {
+  font-family: 'Caveat', cursive;
+  font-size: 52px;
+  color: #2c3e50;
+  text-shadow: 3px 3px 0 #ffd166;
+  line-height: 1;
+}
+.ab-widget .ab-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  color: #5a7a8a;
+  background: white;
+  display: inline-block;
+  padding: 4px 20px;
+  border-radius: 30px;
+  border: 3px solid #2c3e50;
+  margin-top: 6px;
+  box-shadow: 4px 4px 0 #5a7a8a;
+}
+
+/* ===== Teaser: Berge + Box ===== */
+.ab-teaser-wrap {
+  order: 3;
+  flex-shrink: 0;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 60px 30px;
+  position: relative;
+  z-index: 2;
+}
+.ab-teaser-wrap img.ab-berge-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 8px rgba(44,62,80,0.2));
+  pointer-events: none;
+}
+.ab-teaser-box {
+  width: min(560px, 65%);
+  margin: -40px auto 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(4px);
+  border: 4px solid #2c3e50;
+  border-radius: 22px;
+  padding: 22px 28px;
+  box-shadow: 6px 6px 0 #5a7a8a;
+  position: relative;
+  z-index: 3;
+}
+.ab-teaser-box h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 38px;
+  color: #2c3e50;
+  text-align: center;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-shadow: 2px 2px 0 #ffd166;
+}
+.ab-teaser-box .ab-school-year-wrap { text-align: center; }
+.ab-teaser-box .ab-school-year {
+  display: inline-block;
+  background: #ffd166;
+  border: 2px solid #2c3e50;
+  border-radius: 16px;
+  padding: 2px 14px;
+  font-size: 17px;
+  color: #2c3e50;
+  margin: 4px auto 14px;
+}
+.ab-teaser-box p {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+.ab-teaser-box p:last-child { margin-bottom: 0; }
+
+/* ===== Map-Karte ===== */
+.ab-map-wrapper {
+  order: 2;
+  flex-shrink: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+.ab-map-card {
+  background: linear-gradient(180deg, #e8f4d8 0%, #c8e4a8 100%);
+  border-radius: 20px;
+  padding: 12px;
+  padding-top: 30px;
+  box-shadow: 0 10px 40px rgba(44, 62, 80, 0.2);
+  border: 4px solid #2c3e50;
+  position: relative;
+}
+.ab-map-svg-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1200/700;
+  max-height: calc(100vh - 160px);
+  background: linear-gradient(180deg, #d6eef7 0%, #b8e3f5 100%);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 3px solid #2c3e50;
+  touch-action: none;
+  cursor: grab;
+}
+
+/* ===== Echte Karte (Leaflet) ===== */
+.ab-leaflet-map {
+  width: 100%;
+  aspect-ratio: 1200/700;
+  max-height: calc(100vh - 160px);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 3px solid #2c3e50;
+  background: #aadaff;
+}
+.ab-leaflet-pin { background: none; border: none; }
+.ab-leaflet-pin svg { filter: drop-shadow(1px 3px 2px rgba(0,0,0,0.3)); }
+.ab-leaflet-label {
+  background: rgba(255,255,255,0.92);
+  border: 2px solid #2c3e50;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 16px;
+  color: #2c3e50;
+  box-shadow: 2px 2px 0 rgba(44,62,80,0.25);
+  white-space: nowrap;
+}
+.ab-leaflet-label.leaflet-tooltip-top::before { border-top-color: #2c3e50; }
+.ab-map-svg-container.ab-panning { cursor: grabbing; }
+.ab-map-svg-inner { width: 100%; height: 100%; }
+.ab-map-svg-inner svg { width: 100%; height: 100%; display: block; }
+
+/* Zoom-Controls */
+.ab-zoom-controls {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+.ab-zoom-btn {
+  width: 44px;
+  height: 44px;
+  background: white;
+  border: 3px solid #2c3e50;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #2c3e50;
+  color: #2c3e50;
+  font-family: 'Patrick Hand', cursive;
+  line-height: 1;
+  transition: transform 0.1s;
+  user-select: none;
+  padding: 0;
+}
+.ab-zoom-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #2c3e50; }
+.ab-zoom-btn:hover { background: #ffd166; }
+
+/* ===== Karten-Elemente ===== */
+.ab-tirol-shape {
+  fill: #a8d68a;
+  stroke: #2c3e50;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  filter: drop-shadow(3px 5px 0 rgba(44,62,80,0.15));
+}
+.ab-suedtirol-shape {
+  fill: #f0d896;
+  stroke: #2c3e50;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  filter: drop-shadow(3px 5px 0 rgba(44,62,80,0.15));
+}
+
+.ab-pin-group { cursor: pointer; }
+.ab-pin-shape { transition: transform 0.3s ease; transform-origin: 0 0; transform-box: fill-box; }
+.ab-pin-group:hover .ab-pin-shape { transform: translate(0, -6px) scale(1.08); }
+.ab-pin-number {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  fill: #2c3e50;
+  pointer-events: none;
+  user-select: none;
+  transition: transform 0.3s ease;
+}
+.ab-pin-group:hover .ab-pin-number {
+  transform: translateY(-6px) scale(1.08);
+  transform-origin: 0 0;
+  transform-box: fill-box;
+}
+.ab-pin-label {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  fill: #2c3e50;
+  font-weight: 700;
+  pointer-events: none;
+  user-select: none;
+  paint-order: stroke;
+  stroke: white;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+@keyframes ab-dropPin {
+  0%   { transform: translateY(-200px) scale(0.5); opacity: 0; }
+  60%  { transform: translateY(10px) scale(1.1); opacity: 1; }
+  80%  { transform: translateY(-5px) scale(0.95); }
+  100% { transform: translateY(0) scale(1); }
+}
+.ab-pin-drop {
+  animation: ab-dropPin 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: 0 0;
+  transform-box: fill-box;
+}
+
+.ab-route-path {
+  fill: none;
+  stroke: #d4691a;
+  stroke-width: 4;
+  stroke-dasharray: 10 8;
+  stroke-linecap: round;
+  opacity: 0.7;
+  animation: ab-dash 1s linear infinite;
+}
+@keyframes ab-dash { to { stroke-dashoffset: -18; } }
+
+/* ===== Station-Modal ===== */
+.ab-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 62, 80, 0.7);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000001;
+  padding: 20px;
+}
+.ab-modal-overlay.ab-show { display: flex; animation: ab-fadeIn 0.3s; }
+.ab-modal {
+  background: white;
+  border-radius: 25px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 4px solid #2c3e50;
+  box-shadow: 8px 8px 0 #5a7a8a;
+  animation: ab-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+@keyframes ab-pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.ab-modal-header {
+  padding: 25px 30px;
+  border-bottom: 3px dashed #2c3e50;
+  position: relative;
+}
+.ab-modal-emoji { font-size: 60px; }
+.ab-modal-title {
+  font-family: 'Caveat', cursive;
+  font-size: 48px;
+  color: #2c3e50;
+  line-height: 1.1;
+  margin: 5px 0;
+}
+.ab-modal-subtitle {
+  font-size: 20px;
+  color: #5a7a8a;
+}
+.ab-modal-date {
+  display: inline-block;
+  background: #ffd166;
+  padding: 4px 16px;
+  border-radius: 20px;
+  border: 2px solid #2c3e50;
+  font-size: 18px;
+  margin-top: 8px;
+}
+.ab-modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: #e63946;
+  color: white;
+  border: 3px solid #2c3e50;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 3px 3px 0 #2c3e50;
+  transition: transform 0.15s;
+  font-family: system-ui, sans-serif;
+  line-height: 1;
+  padding: 0;
+}
+.ab-modal-close-btn:hover { transform: scale(1.1); }
+.ab-modal-body { padding: 25px 30px 30px; }
+.ab-modal-desc {
+  font-size: 22px;
+  line-height: 1.5;
+  color: #333;
+  background: #f4f1e8;
+  padding: 20px;
+  border-radius: 15px;
+  border-left: 6px solid #ffd166;
+  margin-bottom: 20px;
+}
+.ab-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.ab-photo {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 3px solid #2c3e50;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #5a7a8a;
+  transition: transform 0.2s;
+}
+.ab-photo:hover { transform: translateY(-3px) rotate(-1deg); }
+.ab-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== Kinder-Zitate ===== */
+.ab-quote-row {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0;
+}
+.ab-quote {
+  flex: 1 1 200px;
+  background: #f5f5f5;
+  border-left: 5px solid #b0b0b0;
+  border-radius: 0 12px 12px 0;
+  margin: 0;
+  padding: 12px 16px;
+  font-family: 'Caveat', cursive;
+  font-size: 19px;
+  color: #2c3e50;
+  line-height: 1.4;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.08);
+}
+.ab-quote-frage {
+  display: block;
+  margin-bottom: 6px;
+  font-family: 'Patrick Hand', cursive;
+  font-style: italic;
+  font-size: 16px;
+  color: #5a7a8a;
+}
+.ab-quote-cite {
+  display: block;
+  margin-top: 6px;
+  font-family: 'Patrick Hand', cursive;
+  font-style: normal;
+  font-size: 15px;
+  color: #8a8a8a;
+  text-align: right;
+}
+
+
+/* ===== Lightbox für Einzelfotos ===== */
+.ab-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000002;
+  cursor: pointer;
+  padding: 20px;
+}
+.ab-lightbox.ab-show { display: flex; animation: ab-fadeIn 0.3s; }
+.ab-lightbox img {
+  max-width: 95vw;
+  max-height: 95vh;
+  border-radius: 8px;
+  border: 4px solid white;
+}
+.ab-lb-prev, .ab-lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 56px;
+  line-height: 1;
+  cursor: pointer;
+  color: white;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  z-index: 2;
+  padding: 0 12px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.ab-lb-prev:hover, .ab-lb-next:hover { opacity: 1; }
+.ab-lb-prev { left: 8px; }
+.ab-lb-next { right: 8px; }
+.ab-lb-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  background: rgba(0,0,0,0.5);
+  padding: 4px 16px;
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  /* Reihenfolge: Header → Karte → Teaser */
+  .ab-widget,
+  .ab-widget.ab-open {
+    display: flex;
+    flex-direction: column;
+  }
+  .ab-widget header { order: 1; }
+  .ab-map-wrapper   { order: 2; }
+  .ab-teaser-wrap   { order: 3; }
+
+  .ab-widget h1 { font-size: 48px; }
+  .ab-widget .ab-subtitle { font-size: 24px; padding: 6px 20px; }
+  .ab-teaser-wrap { padding: 0 20px; margin-top: 0; }
+  .ab-teaser-wrap img.ab-berge-img { display: none; }
+  .ab-teaser-box { width: min(560px, 90%); margin: 16px auto; padding: 18px 20px; }
+  .ab-teaser-box h2 { font-size: 30px; }
+  .ab-teaser-box p { font-size: 16px; }
+  .ab-map-wrapper { padding: 0 10px; }
+  .ab-map-card { padding: 15px; padding-top: 30px; border-radius: 20px; }
+  .ab-modal-title { font-size: 32px; }
+  .ab-modal-emoji { font-size: 40px; }
+  .ab-modal-desc { font-size: 18px; }
+  .ab-photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .ab-pin-label { font-size: 24px; }
+  .ab-close-btn { width: 44px; height: 44px; top: 15px; right: 15px; font-size: 22px; }
+}
+
+@media (max-width: 500px) {
+  /* Layout-Reihenfolge: Header → Karte → Teaser */
+  .ab-widget,
+  .ab-widget.ab-open {
+    display: flex;
+    flex-direction: column;
+  }
+  .ab-widget header   { order: 1; padding: 12px 15px 4px; }
+  .ab-map-wrapper     { order: 2; }
+  .ab-teaser-wrap     { order: 3; }
+
+  .ab-widget h1 { font-size: 32px; }
+  .ab-widget .ab-subtitle { font-size: 17px; padding: 4px 14px; }
+
+  /* Karte */
+  .ab-map-wrapper { padding: 0 8px; margin-top: 8px; }
+  .ab-map-card { padding: 10px; padding-top: 20px; border-radius: 16px; }
+
+
+  /* Teaser unterhalb der Karte — kompakt, ohne Bergbild */
+  .ab-teaser-wrap { padding: 12px 12px 20px; margin: 0; }
+  .ab-teaser-wrap img.ab-berge-img { display: none; }
+  .ab-teaser-box {
+    width: 100%;
+    margin: 0 auto;
+    padding: 14px 16px;
+    box-sizing: border-box;
+  }
+  .ab-teaser-box h2 { font-size: 22px; margin-bottom: 2px; }
+  .ab-teaser-box .ab-school-year { font-size: 14px; padding: 2px 10px; margin-bottom: 10px; }
+  .ab-teaser-box p { display: block; font-size: 14px; line-height: 1.4; }
+
+  /* Modal */
+  .ab-modal-header { padding: 20px; padding-top: 60px; }
+  .ab-modal-body { padding: 20px; }
+  .ab-photo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .ab-zoom-btn { width: 38px; height: 38px; font-size: 20px; }
+  .ab-pin-label { font-size: 18px; }
+}

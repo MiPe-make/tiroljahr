@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo-Website mit Abenteuer-Widget</title>
+  <style>
+    /* Beispiel-Styling der "echten" Website — hat nichts mit dem Widget zu tun */
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+      color: #222;
+      line-height: 1.6;
+    }
+    .host-header {
+      background: #2c3e50;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .host-header h1 { margin: 0 0 8px; font-size: 36px; }
+    .host-header p { margin: 0; opacity: 0.8; }
+    .host-section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .host-section h2 { font-size: 24px; margin-bottom: 12px; }
+    .host-section p { margin-bottom: 16px; }
+    .cta-section {
+      text-align: center;
+      padding: 60px 20px;
+      background: #e8f4d8;
+      margin: 40px 0;
+    }
+    .host-footer {
+      background: #2c3e50;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+
+  <!-- 1) Widget-CSS einbinden -->
+  <link rel="stylesheet" href="abenteuer-widget.css?v=27">
+</head>
+<body>
+
+  <!-- Beispiel-Hostwebsite-Inhalt -->
+  <header class="host-header">
+    <h1>Mittelschule Beispieltal</h1>
+    <p>Willkommen auf unserer Schulwebseite</p>
+  </header>
+
+  <section class="host-section">
+    <h2>Unsere Schule</h2>
+    <p>
+      Bla bla bla. Hier steht ein einleitender Text über die Schule, Werte,
+      Pädagogik – ganz normaler Website-Content der nichts mit dem Widget zu tun hat.
+    </p>
+    <p>
+      Im Schuljahr 2025/26 hat unsere Klasse spannende Ausflüge durch Tirol und
+      Südtirol unternommen. Klick auf den Button unten, um unsere Reise interaktiv
+      zu erkunden!
+    </p>
+  </section>
+
+  <!-- Aufruf-Button zum Öffnen des Widgets -->
+  <section class="cta-section">
+    <h2>🗺️ Unsere Reise erleben</h2>
+    <p>Tauche ein in die Stationen unserer Klassenausflüge:</p>
+    <button class="ab-widget-trigger">🗺️ Reise ansehen</button>
+  </section>
+
+  <section class="host-section">
+    <h2>Andere Themen</h2>
+    <p>Weitere Inhalte der Hostwebsite ...</p>
+  </section>
+
+  <footer class="host-footer">
+    © 2026 Mittelschule Beispieltal — Demo-Seite für das Widget
+  </footer>
+
+  <!-- 2) Widget-Daten und Logik einbinden -->
+  <script src="abenteuer-data.js?v=27"></script>
+  <script src="abenteuer-widget.js?v=27"></script>
+
+  <!-- 3) Widget initialisieren -->
+  <script>
+    window.AbenteuerWidget.init({
+      assetsPath: 'assets/',          // Pfad zu berge.png, tree-big.png, tree-med.png
+      autoOpen: false,                // true = Widget öffnet sich beim Laden
+      triggerSelector: '.ab-widget-trigger',  // Selektor für Open-Buttons
+      loadFonts: true                 // Google-Fonts automatisch laden
+    });
+  </script>
+
+</body>
+</html>
