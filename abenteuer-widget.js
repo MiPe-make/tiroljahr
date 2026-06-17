@@ -138,11 +138,14 @@
           iconSize: [36, 46], iconAnchor: [18, 46], tooltipAnchor: [0, -40]
         });
         const m = L.marker([s.lat, s.lon], { icon: icon }).addTo(mapObj);
-        m.bindTooltip(String(s.name).replace(/\n/g, ' '), { permanent: true, direction: 'top', className: 'ab-leaflet-label', opacity: 1 });
+        m.bindTooltip(String(s.name).replace(/\n/g, ' '), { permanent: false, direction: 'top', className: 'ab-leaflet-label', opacity: 1 });
         m.on('click', function () { openStationModal(s); });
       });
       fitRoute();
-      setTimeout(function () { mapObj.invalidateSize(); fitRoute(); }, 120);
+      // Größe mehrfach nachjustieren (Container kann beim Öffnen/Animation noch 0 sein)
+      [120, 400, 800].forEach(function (ms) {
+        setTimeout(function () { if (mapObj) { mapObj.invalidateSize(); fitRoute(); } }, ms);
+      });
     });
   }
 
@@ -162,8 +165,8 @@
     document.body.classList.add('ab-widget-open');
     // Zur Spitze scrollen
     widgetEl.scrollTop = 0;
-    // Echte Karte initialisieren (erst wenn sichtbar → korrekte Größe)
-    setTimeout(ensureLeafletMap, 60);
+    // Echte Karte initialisieren (erst nach der Einblend-Animation → korrekte Größe)
+    setTimeout(ensureLeafletMap, 350);
   }
 
   function closeWidget() {
