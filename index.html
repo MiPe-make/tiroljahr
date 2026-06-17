@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Unsere Abenteuer – Tirol & Südtirol</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #b8e3f5;
+      color: #2c3e50;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .landing { padding: 30px; }
+    .landing h1 { font-size: 30px; margin-bottom: 10px; }
+    .landing p { opacity: 0.85; margin-bottom: 24px; }
+  </style>
+  <link rel="stylesheet" href="abenteuer-widget.css?v=38">
+</head>
+<body>
+
+  <div class="landing">
+    <h1>Unsere Reise durch Tirol &amp; Südtirol</h1>
+    <p>Klick auf den Button, um unsere Klassenausflüge interaktiv zu erkunden.</p>
+    <button class="ab-widget-trigger">🗺️ Reise ansehen</button>
+  </div>
+
+  <script src="abenteuer-data.js?v=38"></script>
+  <script src="abenteuer-widget.js?v=38"></script>
+  <script>
+    window.AbenteuerWidget.init({
+      autoOpen: true,                          // Karte öffnet sich direkt beim Laden
+      triggerSelector: '.ab-widget-trigger',
+      photosPath: '',                          // Fotos liegen direkt im Hauptverzeichnis
+      loadFonts: true
+    });
+  </script>
+
+</body>
+</html>
