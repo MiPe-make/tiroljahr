@@ -5,40 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Unsere Abenteuer – Tirol & Südtirol</title>
+
+  <!-- Handschrift-Fonts (wie im Widget) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+
   <style>
+    html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: #b8e3f5;
+      font-family: 'Patrick Hand', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #b8e3f5 0%, #d6eef7 55%, #e8f4d8 100%);
       color: #2c3e50;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      overflow: hidden;
+      position: relative;
     }
-    .landing { padding: 30px; }
-    .landing h1 { font-size: 30px; margin-bottom: 10px; }
-    .landing p { opacity: 0.85; margin-bottom: 24px; }
+
+    /* Berg-Panorama als Hintergrund — skaliert mit der Breite, wird nie abgeschnitten */
+    .mountains {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: auto;
+      z-index: 0;
+      pointer-events: none;
+      display: block;
+    }
+
+    .landing {
+      position: relative;
+      z-index: 2;
+      padding: 30px;
+      margin-bottom: 6vh;
+    }
+    .landing h1 {
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: clamp(44px, 9vw, 76px);
+      color: #2c3e50;
+      text-shadow: 3px 3px 0 #ffd166;
+      line-height: 1;
+      margin: 0 0 18px;
+    }
+    .landing .subtitle {
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: clamp(22px, 4.5vw, 32px);
+      color: #5a7a8a;
+      background: white;
+      display: inline-block;
+      padding: 6px 26px;
+      border-radius: 30px;
+      border: 3px solid #2c3e50;
+      box-shadow: 4px 4px 0 #5a7a8a;
+      margin-bottom: 28px;
+    }
+    .landing .hint {
+      font-size: 19px;
+      color: #5a7a8a;
+      margin: 0 0 24px;
+    }
+
+    /* Impressum-Fußzeile */
+    .impressum {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 3;
+      padding: 6px 14px;
+      font-size: 10px;
+      line-height: 1.35;
+      color: #3a5563;
+      background: rgba(255,255,255,0.7);
+      text-align: center;
+    }
+    .impressum strong { color: #2c3e50; }
   </style>
-  <link rel="stylesheet" href="abenteuer-widget.css?v=38">
+
+  <link rel="stylesheet" href="abenteuer-widget.css?v=44">
 </head>
 <body>
 
+  <!-- Berg-Panorama (Flat-Design, breit – wird nie abgeschnitten) -->
+  <svg class="mountains" viewBox="0 0 1600 340" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+    <!-- hintere Berge (heller, Tiefe) -->
+    <polygon points="140,250 400,120 660,250" fill="#aecdc6"/>
+    <polygon points="600,250 860,150 1120,250" fill="#aecdc6"/>
+    <polygon points="1040,250 1300,160 1560,250" fill="#aecdc6"/>
+
+    <!-- LINKER Gipfel -->
+    <polygon points="240,110 70,250 240,250" fill="#8bb3aa"/>
+    <polygon points="240,110 240,250 420,250" fill="#618f85"/>
+    <polygon points="240,110 214,156 224,150 233,159 240,148" fill="#f3fafc"/>
+    <polygon points="240,110 240,148 250,160 260,150 267,156" fill="#d2e6ed"/>
+
+    <!-- RECHTER Gipfel -->
+    <polygon points="1300,120 1120,250 1300,250" fill="#8bb3aa"/>
+    <polygon points="1300,120 1300,250 1540,250" fill="#618f85"/>
+    <polygon points="1300,120 1276,160 1286,154 1295,163 1300,152" fill="#f3fafc"/>
+    <polygon points="1300,120 1300,152 1310,164 1320,154 1327,160" fill="#d2e6ed"/>
+
+    <!-- ZENTRAL-RECHTER Gipfel -->
+    <polygon points="920,80 700,250 920,250" fill="#8bb3aa"/>
+    <polygon points="920,80 920,250 1140,250" fill="#618f85"/>
+    <polygon points="920,80 890,132 901,126 911,135 920,124" fill="#f3fafc"/>
+    <polygon points="920,80 920,124 930,136 941,127 950,132" fill="#d2e6ed"/>
+
+    <!-- ZENTRALER Hauptgipfel (am höchsten) -->
+    <polygon points="560,45 320,250 560,250" fill="#8bb3aa"/>
+    <polygon points="560,45 560,250 800,250" fill="#618f85"/>
+    <polygon points="560,45 498,200 532,184 560,250 560,45" fill="#7ba79d" opacity="0.55"/>
+    <polygon points="560,45 526,105 538,98 549,108 560,96" fill="#f3fafc"/>
+    <polygon points="560,45 560,96 571,109 582,98 595,105" fill="#d2e6ed"/>
+
+    <!-- Wiese (überdeckt Bergfüße) -->
+    <path d="M0,256 C 280,244 480,264 800,252 C 1120,240 1320,262 1600,250 L1600,340 L0,340 Z" fill="#a8d68a"/>
+    <path d="M0,292 C 300,282 520,296 820,288 C 1120,280 1340,294 1600,286 L1600,340 L0,340 Z" fill="#94c878"/>
+
+    <!-- Fluss -->
+    <path d="M812,250 C 824,278 862,284 852,306 C 846,322 786,324 786,340
+             L884,340 C 884,324 924,318 904,288 C 888,266 862,272 862,250 Z" fill="#c2e7f6"/>
+    <path d="M828,272 C 854,282 858,300 848,316" stroke="#e6f5fc" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+    <!-- Tannen -->
+    <g fill="#2f5742">
+      <g transform="translate(120,254) scale(0.8)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(185,260) scale(0.55)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(330,250) scale(0.95)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(470,260) scale(0.7)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(640,254) scale(0.7)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(990,252) scale(0.78)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(1130,260) scale(0.6)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(1255,250) scale(0.88)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+      <g transform="translate(1420,258) scale(0.7)"><rect x="-5" y="-11" width="10" height="13" fill="#6e4b2c"/><polygon points="-28,-6 28,-6 0,-46"/><polygon points="-23,-26 23,-26 0,-62"/><polygon points="-16,-44 16,-44 0,-74"/></g>
+    </g>
+  </svg>
+
   <div class="landing">
-    <h1>Unsere Reise durch Tirol &amp; Südtirol</h1>
-    <p>Klick auf den Button, um unsere Klassenausflüge interaktiv zu erkunden.</p>
-    <button class="ab-widget-trigger">🗺️ Reise ansehen</button>
+    <h1>Unsere Abenteuer</h1>
+    <div class="subtitle">Tirol &amp; Südtirol — into the wild</div>
+    <p class="hint">Klick auf den Button, um unsere Klassenausflüge interaktiv zu erkunden.</p>
+    <button class="ab-widget-trigger">Reise ansehen</button>
   </div>
 
-  <script src="abenteuer-data.js?v=38"></script>
-  <script src="abenteuer-widget.js?v=38"></script>
+  <footer class="impressum">
+    <strong>Impressum</strong> · Mittelschule Pfunds, Stuben 264, 6542 Pfunds ·
+    Verantwortlich für diese verlinkte Seite: Mirjam Pedrazzoli
+  </footer>
+
+  <script src="abenteuer-data.js?v=44"></script>
+  <script src="abenteuer-widget.js?v=44"></script>
   <script>
     window.AbenteuerWidget.init({
-      autoOpen: true,                          // Karte öffnet sich direkt beim Laden
+      autoOpen: false,
       triggerSelector: '.ab-widget-trigger',
-      photosPath: '',                          // Fotos liegen direkt im Hauptverzeichnis
-      loadFonts: true
+      photosPath: '',
+      loadFonts: true,
+      impressum: 'Impressum · Mittelschule Pfunds, Stuben 264, 6542 Pfunds · Verantwortlich für diese verlinkte Seite: Mirjam Pedrazzoli'
     });
   </script>
 

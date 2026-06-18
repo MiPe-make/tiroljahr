@@ -120,6 +120,16 @@ body.ab-widget-open { overflow: hidden; }
   position: relative;
   z-index: 2;
 }
+.ab-impressum {
+  order: 4;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 10px 16px 18px;
+  font-family: 'Patrick Hand', system-ui, sans-serif;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #5a7a8a;
+}
 .ab-teaser-wrap img.ab-berge-img {
   width: 100%;
   height: auto;
